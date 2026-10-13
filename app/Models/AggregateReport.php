@@ -1,0 +1,42 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
+class AggregateReport extends Model
+{
+    use HasFactory;
+
+    protected $table = 'aggregatereports';
+    protected $primaryKey = 'report_id';
+    public $incrementing = true;
+    protected $keyType = 'int';
+    public $timestamps = false; // pakai generated_at
+
+    protected $fillable = [
+        'generated_by',
+        'report_type',
+        'period_start',
+        'period_end',
+        'file_path',
+    ];
+
+    protected function casts(): array
+    {
+        return [
+            'period_start' => 'date',
+            'period_end'   => 'date',
+            'generated_at' => 'datetime',
+        ];
+    }
+
+    // === RELATIONS ===
+
+    public function generator(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'generated_by', 'user_id');
+    }
+}

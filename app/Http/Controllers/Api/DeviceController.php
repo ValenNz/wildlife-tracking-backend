@@ -4,25 +4,32 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\TrackingDevice;
+use Illuminate\Http\Request;
 
 class DeviceController extends Controller
 {
     public function index()
     {
         $devices = TrackingDevice::with('animal.species')->get();
-        return response()->json(['data' => $devices]);
+
+        return response()->json([
+            'success' => true,
+            'data' => $devices
+        ]);
     }
 
-    public function alerts()
+    public function show($id)
     {
-        $alerts = TrackingDevice::with('animal.species')
-            ->where(function($q) {
-                $q->where('battery_level', '<', 20)
-                  ->orWhere('signal_strength', '<', 3)
-                  ->orWhere('is_active', false);
-            })
-            ->get();
-        
-        return response()->json(['data' => $alerts]);
+        $device = TrackingDevice::with(['animal.species', 'gpsReadings'])
+            ->find($id);
+
+        if (!$device) {
+            return response()->json(['error' => 'Device not found'], 404);
+        }
+
+        return response()->json([
+            'success' => true,
+            'data' => $device
+        ]);
     }
 }
