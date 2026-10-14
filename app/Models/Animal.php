@@ -55,15 +55,4 @@ class Animal extends Model
     {
         return $this->hasMany(Notification::class, 'animal_id', 'animal_id');
     }
-
-    // Tambahkan method ini di class Animal
-public function trackingDevice()
-{
-    return $this->hasOne(TrackingDevice::class, 'animal_id', 'animal_id');
-}
-
-public function species()
-{
-    return $this->belongsTo(Species::class, 'species_id', 'species_id');
-}
 }
