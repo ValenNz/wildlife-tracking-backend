@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\TrackingDevice;
-use Illuminate\Http\Request;
 
 class DeviceController extends Controller
 {
@@ -14,7 +13,7 @@ class DeviceController extends Controller
 
         return response()->json([
             'success' => true,
-            'data' => $devices
+            'data' => $devices,
         ]);
     }
 
@@ -23,13 +22,13 @@ class DeviceController extends Controller
         $device = TrackingDevice::with(['animal.species', 'gpsReadings'])
             ->find($id);
 
-        if (!$device) {
+        if (! $device) {
             return response()->json(['error' => 'Device not found'], 404);
         }
 
         return response()->json([
             'success' => true,
-            'data' => $device
+            'data' => $device,
         ]);
     }
 }

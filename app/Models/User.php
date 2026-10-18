@@ -6,19 +6,25 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable;
 
     protected $table = 'users';
+
     protected $primaryKey = 'user_id';
+
     public $incrementing = true;
+
     protected $keyType = 'int';
-    public $timestamps = false; // hanya ada created_at
+
+    public const UPDATED_AT = null;
 
     protected $fillable = [
-        'name',
+        'username',
+        'full_name',
         'email',
         'password',
         'role',
@@ -31,11 +37,10 @@ class User extends Authenticatable
     protected function casts(): array
     {
         return [
+            'password' => 'hashed',
             'created_at' => 'datetime',
         ];
     }
-
-    // === RELATIONS ===
 
     public function incidentReports(): HasMany
     {
@@ -70,5 +75,10 @@ class User extends Authenticatable
     public function notifications(): HasMany
     {
         return $this->hasMany(Notification::class, 'user_id', 'user_id');
+    }
+
+    public function hasRole(string $role): bool
+    {
+        return $this->role === $role;
     }
 }

@@ -11,18 +11,18 @@ class Species extends Model
     use HasFactory;
 
     protected $table = 'species';
+
     protected $primaryKey = 'species_id';
+
     public $incrementing = true;
+
     protected $keyType = 'int';
-    public $timestamps = false;
 
     protected $fillable = [
         'common_name',
         'scientific_name',
         'conservation_status',
     ];
-
-    // === RELATIONS ===
 
     public function animals(): HasMany
     {

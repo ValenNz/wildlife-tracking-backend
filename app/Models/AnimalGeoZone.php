@@ -11,41 +11,47 @@ class AnimalGeoZone extends Model
     use HasFactory;
 
     protected $table = 'animalgeozones';
+
     protected $primaryKey = 'visit_id';
+
     public $incrementing = true;
+
     protected $keyType = 'int';
+
     public $timestamps = false;
 
     protected $fillable = [
         'animal_id',
         'zone_id',
         'entry_reading_id',
-        'entered_at',
-        'exited_at',
+        'exit_reading_id',
+        'duration_hours',
     ];
 
     protected function casts(): array
     {
         return [
-            'entered_at' => 'datetime',
-            'exited_at'  => 'datetime',
+            'duration_hours' => 'float',
         ];
     }
-
-    // === RELATIONS ===
 
     public function animal(): BelongsTo
     {
         return $this->belongsTo(Animal::class, 'animal_id', 'animal_id');
     }
 
-    public function geoZone(): BelongsTo
+    public function zone(): BelongsTo
     {
         return $this->belongsTo(GeoZone::class, 'zone_id', 'zone_id');
     }
 
     public function entryReading(): BelongsTo
     {
-        return $this->belongsTo(GPSReading::class, 'entry_reading_id', 'reading_id');
+        return $this->belongsTo(GPSReadings::class, 'entry_reading_id', 'reading_id');
+    }
+
+    public function exitReading(): BelongsTo
+    {
+        return $this->belongsTo(GPSReadings::class, 'exit_reading_id', 'reading_id');
     }
 }

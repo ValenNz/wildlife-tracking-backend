@@ -12,16 +12,21 @@ class AIMediaUpload extends Model
     use HasFactory;
 
     protected $table = 'aimediauploads';
+
     protected $primaryKey = 'media_id';
+
     public $incrementing = true;
+
     protected $keyType = 'int';
-    public $timestamps = false; // pakai uploaded_at
+
+    public $timestamps = false;
 
     protected $fillable = [
         'uploaded_by',
         'report_id',
         'media_type',
         'file_path',
+        'uploaded_at',
     ];
 
     protected function casts(): array
@@ -30,8 +35,6 @@ class AIMediaUpload extends Model
             'uploaded_at' => 'datetime',
         ];
     }
-
-    // === RELATIONS ===
 
     public function uploader(): BelongsTo
     {

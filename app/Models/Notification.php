@@ -11,30 +11,32 @@ class Notification extends Model
     use HasFactory;
 
     protected $table = 'notifications';
+
     protected $primaryKey = 'notif_id';
+
     public $incrementing = true;
+
     protected $keyType = 'int';
-    public $timestamps = false; // pakai created_at saja
+
+    public const UPDATED_AT = null;
 
     protected $fillable = [
         'user_id',
-        'notification_type',
-        'message',
         'animal_id',
         'zone_id',
         'device_id',
+        'title',
+        'message',
         'is_read',
     ];
 
     protected function casts(): array
     {
         return [
-            'is_read'    => 'boolean',
+            'is_read' => 'boolean',
             'created_at' => 'datetime',
         ];
     }
-
-    // === RELATIONS ===
 
     public function user(): BelongsTo
     {
@@ -46,12 +48,12 @@ class Notification extends Model
         return $this->belongsTo(Animal::class, 'animal_id', 'animal_id');
     }
 
-    public function geoZone(): BelongsTo
+    public function zone(): BelongsTo
     {
         return $this->belongsTo(GeoZone::class, 'zone_id', 'zone_id');
     }
 
-    public function trackingDevice(): BelongsTo
+    public function device(): BelongsTo
     {
         return $this->belongsTo(TrackingDevice::class, 'device_id', 'device_id');
     }

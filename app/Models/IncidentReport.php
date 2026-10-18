@@ -12,30 +12,30 @@ class IncidentReport extends Model
     use HasFactory;
 
     protected $table = 'incidentreports';
+
     protected $primaryKey = 'report_id';
+
     public $incrementing = true;
+
     protected $keyType = 'int';
-    public $timestamps = false; // pakai 'timestamp' bukan created_at
+
+    public $timestamps = false;
 
     protected $fillable = [
         'user_id',
-        'incident_type',
-        'animal_code',
         'location',
+        'incident_type',
         'description',
-        'timestamp',
-        'photo_url',
-        'sync_status',
+        'reported_at',
+        'media_url',
     ];
 
     protected function casts(): array
     {
         return [
-            'timestamp' => 'datetime',
+            'reported_at' => 'datetime',
         ];
     }
-
-    // === RELATIONS ===
 
     public function reporter(): BelongsTo
     {

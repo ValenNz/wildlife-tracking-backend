@@ -1,45 +1,48 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\DashboardController;
 use App\Http\Controllers\Api\DeviceController;
+use App\Http\Controllers\Api\ExportController;
 use App\Http\Controllers\Api\GeoZonesController;
 use App\Http\Controllers\Api\GpsReadingController;
-use App\Http\Controllers\Api\ExportController;
+use App\Models\Animal;
+use App\Models\IncidentReport;
+use App\Models\Notification;
+use App\Models\Species;
+use Illuminate\Support\Facades\Route;
 
-// Dashboard - Ringkasan data
-Route::get('/dashboard', [DashboardController::class, 'index']);
+Route::post('/login', [AuthController::class, 'login']);
 
-// Animals - Daftar hewan
-Route::get('/animals', function() {
-    return response()->json(\App\Models\Animal::with('species')->get());
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/me', [AuthController::class, 'me']);
+    Route::post('/logout', [AuthController::class, 'logout']);
+
+    Route::get('/dashboard', [DashboardController::class, 'summary']);
+    Route::get('/export/gps/csv', [ExportController::class, 'csv']);
+    Route::get('/export/gps/geojson', [ExportController::class, 'geojson']);
+
+    Route::get('/animals', function () {
+        return response()->json(['data' => Animal::with('species')->get()]);
+    });
+
+    Route::get('/species', function () {
+        return response()->json(['data' => Species::all()]);
+    });
+
+    Route::get('/gps-readings', [GpsReadingController::class, 'index']);
+    Route::get('/gps-readings/{animal_id}', [GpsReadingController::class, 'byAnimal']);
+
+    Route::get('/devices', [DeviceController::class, 'index']);
+    Route::get('/devices/{id}', [DeviceController::class, 'show']);
+
+    Route::get('/geo-zones', [GeoZonesController::class, 'index']);
+
+    Route::get('/incidents', function () {
+        return response()->json(['data' => IncidentReport::all()]);
+    });
+
+    Route::get('/notifications', function () {
+        return response()->json(['data' => Notification::all()]);
+    });
 });
-
-// Species - Daftar spesies
-Route::get('/species', function() {
-    return response()->json(\App\Models\Species::all());
-});
-
-// GPS Readings - Data lokasi
-Route::get('/gps-readings', [GpsReadingController::class, 'index']);
-Route::get('/gps-readings/{animal_id}', [GpsReadingController::class, 'byAnimal']);
-
-// Tracking Devices - Perangkat pelacak
-Route::get('/devices', [DeviceController::class, 'index']);
-Route::get('/devices/{id}', [DeviceController::class, 'show']);
-
-// Geo Zones - Zona wilayah
-Route::get('/geo-zones', [GeoZonesController::class, 'index']);
-
-// Incident Reports - Laporan kejadian
-Route::get('/incidents', function() {
-    return response()->json(\App\Models\IncidentReport::all());
-});
-
-// Notifications - Notifikasi
-Route::get('/notifications', function() {
-    return response()->json(\App\Models\Notification::all());
-});
-
-// Export - Export data
-Route::get('/export/gps', [ExportController::class, 'gps']);

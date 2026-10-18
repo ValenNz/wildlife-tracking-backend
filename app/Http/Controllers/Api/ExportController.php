@@ -3,14 +3,14 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\GpsReading;
+use App\Models\GPSReadings;
 use Illuminate\Http\Request;
 
 class ExportController extends Controller
 {
     public function csv(Request $request)
     {
-        $readings = GpsReading::with('device.animal.species')->get();
+        $readings = GPSReadings::with('device.animal.species')->get();
 
         $csv = "timestamp,latitude,longitude,accuracy,species,animal_id\n";
         foreach ($readings as $r) {
@@ -25,23 +25,23 @@ class ExportController extends Controller
 
     public function geojson(Request $request)
     {
-        $readings = GpsReading::with('device.animal.species')->get();
+        $readings = GPSReadings::with('device.animal.species')->get();
 
         $geojson = [
             'type' => 'FeatureCollection',
-            'features' => $readings->map(fn($r) => [
+            'features' => $readings->map(fn ($r) => [
                 'type' => 'Feature',
                 'geometry' => [
                     'type' => 'Point',
-                    'coordinates' => [(float)$r->longitude, (float)$r->latitude]
+                    'coordinates' => [(float) $r->longitude, (float) $r->latitude],
                 ],
                 'properties' => [
                     'animal_name' => $r->device->animal->name,
                     'species' => $r->device->animal->species->scientific_name,
                     'recorded_at' => $r->recorded_at,
-                    'accuracy' => $r->accuracy_meters
-                ]
-            ])
+                    'accuracy' => $r->accuracy_meters,
+                ],
+            ]),
         ];
 
         return response()->json($geojson)

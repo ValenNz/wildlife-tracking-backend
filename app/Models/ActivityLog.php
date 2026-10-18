@@ -11,26 +11,27 @@ class ActivityLog extends Model
     use HasFactory;
 
     protected $table = 'activitylog';
+
     protected $primaryKey = 'log_id';
+
     public $incrementing = true;
+
     protected $keyType = 'int';
-    public $timestamps = false; // pakai 'timestamp'
+
+    public const UPDATED_AT = null;
 
     protected $fillable = [
         'user_id',
         'action',
-        'timestamp',
         'details',
     ];
 
     protected function casts(): array
     {
         return [
-            'timestamp' => 'datetime',
+            'created_at' => 'datetime',
         ];
     }
-
-    // === RELATIONS ===
 
     public function user(): BelongsTo
     {

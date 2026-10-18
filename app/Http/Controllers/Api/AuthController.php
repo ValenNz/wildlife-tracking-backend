@@ -3,52 +3,101 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Models\User;
 use App\Models\ActivityLog;
+use App\Models\User;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
-    public function login(Request $request)
+    private const TOKEN_NAME = 'auth_token';
+
+    public function login(Request $request): JsonResponse
     {
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required'
+        $validator = Validator::make($request->all(), [
+            'username' => ['required', 'string'],
+            'password' => ['required', 'string'],
         ]);
 
-        $user = User::where('email', $request->email)->first();
-
-        if (!$user || !Hash::check($request->password, $user->password)) {
-            return response()->json([
-                'message' => 'Invalid credentials'
-            ], 401);
+        if ($validator->fails()) {
+            return $this->failed('Validasi gagal.', 422, $validator->errors()->toArray());
         }
 
-        $token = $user->createToken('api-token')->plainTextToken;
+        $credentials = $validator->validated();
 
-        // Log aktivitas (FR-11)
-        ActivityLog::create([
+        $user = User::query()
+            ->where('username', $credentials['username'])
+            ->first();
+
+        if ($user === null || ! Hash::check($credentials['password'], $user->password)) {
+            return $this->failed('Username atau password salah.', 401, [
+                'credentials' => ['Kredensial tidak valid'],
+            ]);
+        }
+
+        $user->tokens()->delete();
+
+        $token = $user->createToken(self::TOKEN_NAME)->plainTextToken;
+
+        ActivityLog::query()->create([
             'user_id' => $user->user_id,
             'action' => 'login',
-            'details' => 'Login from IP ' . $request->ip(),
-            'timestamp' => now()
+            'details' => 'Login berhasil melalui API.',
         ]);
 
-        return response()->json([
+        return $this->success('Login berhasil', [
             'token' => $token,
-            'user' => [
-                'id' => $user->user_id,
-                'name' => $user->name,
-                'email' => $user->email,
-                'role' => $user->role
-            ]
+            'user' => $this->presentUser($user),
         ]);
     }
 
-    public function logout(Request $request)
+    public function me(Request $request): JsonResponse
+    {
+        return $this->success('Data pengguna berhasil diambil.', [
+            'user' => $this->presentUser($request->user()),
+        ]);
+    }
+
+    public function logout(Request $request): JsonResponse
     {
         $request->user()->currentAccessToken()->delete();
-        return response()->json(['message' => 'Logged out']);
+
+        return $this->success('Logout berhasil.');
+    }
+
+    private function presentUser(User $user): array
+    {
+        return [
+            'user_id' => $user->user_id,
+            'username' => $user->username,
+            'full_name' => $user->full_name,
+            'email' => $user->email,
+            'role' => $user->role,
+        ];
+    }
+
+    private function success(string $message, mixed $data = null, int $status = 200): JsonResponse
+    {
+        return response()->json([
+            'success' => true,
+            'message' => $message,
+            'data' => $data,
+            'errors' => null,
+        ], $status);
+    }
+
+    private function failed(
+        string $message,
+        int $status,
+        ?array $errors = null,
+    ): JsonResponse {
+        return response()->json([
+            'success' => false,
+            'message' => $message,
+            'data' => null,
+            'errors' => $errors,
+        ], $status);
     }
 }

@@ -11,36 +11,33 @@ class AIPrediction extends Model
     use HasFactory;
 
     protected $table = 'aipredictions';
+
     protected $primaryKey = 'prediction_id';
+
     public $incrementing = true;
+
     protected $keyType = 'int';
+
     public $timestamps = false;
 
     protected $fillable = [
         'media_id',
         'predicted_species_id',
-        'confidence',
-        'model_version',
-        'processing_status',
-        'processed_at',
-        'verification_status',
-        'verified_species_id',
+        'confidence_score',
+        'predicted_at',
         'verified_by',
-        'verified_at',
+        'verified_species_id',
     ];
 
     protected function casts(): array
     {
         return [
-            'confidence'   => 'decimal:4',
-            'processed_at' => 'datetime',
-            'verified_at'  => 'datetime',
+            'confidence_score' => 'float',
+            'predicted_at' => 'datetime',
         ];
     }
 
-    // === RELATIONS ===
-
-    public function mediaUpload(): BelongsTo
+    public function media(): BelongsTo
     {
         return $this->belongsTo(AIMediaUpload::class, 'media_id', 'media_id');
     }

@@ -13,14 +13,16 @@ class Animal extends Model
     use HasFactory;
 
     protected $table = 'animals';
+
     protected $primaryKey = 'animal_id';
+
     public $incrementing = true;
+
     protected $keyType = 'int';
-    public $timestamps = false;
 
     protected $fillable = [
         'species_id',
-        'name',
+        'animal_code',
         'birth_date',
         'gender',
         'is_active',
@@ -30,11 +32,9 @@ class Animal extends Model
     {
         return [
             'birth_date' => 'date',
-            'is_active'  => 'boolean',
+            'is_active' => 'boolean',
         ];
     }
-
-    // === RELATIONS ===
 
     public function species(): BelongsTo
     {

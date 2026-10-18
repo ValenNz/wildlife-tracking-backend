@@ -12,33 +12,26 @@ class GeoZone extends Model
     use HasFactory;
 
     protected $table = 'geozones';
+
     protected $primaryKey = 'zone_id';
+
     public $incrementing = true;
+
     protected $keyType = 'int';
-    public $timestamps = false; // hanya created_at
 
     protected $fillable = [
         'zone_name',
         'zone_type',
-        'center_lat',
-        'center_lon',
-        'radius_km',
-        'polygon_geojson',
+        'polygon_data',
         'created_by',
     ];
 
     protected function casts(): array
     {
         return [
-            'center_lat'        => 'decimal:6',
-            'center_lon'        => 'decimal:6',
-            'radius_km'         => 'decimal:3',
-            'polygon_geojson'   => 'array',
-            'created_at'        => 'datetime',
+            'polygon_data' => 'array',
         ];
     }
-
-    // === RELATIONS ===
 
     public function creator(): BelongsTo
     {
