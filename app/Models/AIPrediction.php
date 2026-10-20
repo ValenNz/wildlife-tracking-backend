@@ -10,7 +10,7 @@ class AIPrediction extends Model
 {
     use HasFactory;
 
-    protected $table = 'aipredictions';
+    protected $table = 'ai_predictions';
 
     protected $primaryKey = 'prediction_id';
 

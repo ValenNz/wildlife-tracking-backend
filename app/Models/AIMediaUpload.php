@@ -11,7 +11,7 @@ class AIMediaUpload extends Model
 {
     use HasFactory;
 
-    protected $table = 'aimediauploads';
+    protected $table = 'ai_media_uploads';
 
     protected $primaryKey = 'media_id';
 

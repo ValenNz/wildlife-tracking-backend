@@ -11,7 +11,7 @@ class IncidentReport extends Model
 {
     use HasFactory;
 
-    protected $table = 'incidentreports';
+    protected $table = 'incident_reports';
 
     protected $primaryKey = 'report_id';
 

@@ -11,7 +11,7 @@ return new class extends Migration
         Schema::create('bookings', function (Blueprint $table) {
             $table->id('booking_id');
             $table->string('booking_code', 20)->unique();
-            $table->unsignedInteger('visitor_id');
+            $table->unsignedBigInteger('visitor_id'); 
             $table->date('visit_date');
             $table->decimal('total_amount', 12, 2)->default(0);
             $table->enum('booking_status', ['pending', 'paid', 'cancelled', 'expired', 'completed'])->default('pending');

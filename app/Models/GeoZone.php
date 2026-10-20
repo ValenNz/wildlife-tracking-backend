@@ -11,7 +11,7 @@ class GeoZone extends Model
 {
     use HasFactory;
 
-    protected $table = 'geozones';
+    protected $table = 'geo_zones';
 
     protected $primaryKey = 'zone_id';
 

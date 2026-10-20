@@ -10,7 +10,7 @@ class WeatherData extends Model
 {
     use HasFactory;
 
-    protected $table = 'weatherdata';
+    protected $table = 'weather_data';
 
     protected $primaryKey = 'weather_id';
 

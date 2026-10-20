@@ -11,7 +11,7 @@ return new class extends Migration
         Schema::create('booking_items', function (Blueprint $table) {
             $table->id('item_id');
             $table->unsignedBigInteger('booking_id');
-            $table->unsignedInteger('ticket_type_id');
+            $table->unsignedBigInteger('ticket_type_id');
             $table->unsignedSmallInteger('quantity');
             $table->decimal('unit_price', 12, 2);
             $table->decimal('subtotal', 12, 2)->storedAs('quantity * unit_price');

@@ -11,7 +11,7 @@ class GPSReadings extends Model
 {
     use HasFactory;
 
-    protected $table = 'gpsreadings';
+    protected $table = 'gps_readings';
 
     protected $primaryKey = 'reading_id';
 

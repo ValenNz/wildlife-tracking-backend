@@ -10,7 +10,7 @@ class AnimalGeoZone extends Model
 {
     use HasFactory;
 
-    protected $table = 'animalgeozones';
+    protected $table = 'animal_geo_zones';
 
     protected $primaryKey = 'visit_id';
 

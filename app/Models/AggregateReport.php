@@ -10,7 +10,7 @@ class AggregateReport extends Model
 {
     use HasFactory;
 
-    protected $table = 'aggregatereports';
+    protected $table = 'aggregate_reports';
 
     protected $primaryKey = 'report_id';
 

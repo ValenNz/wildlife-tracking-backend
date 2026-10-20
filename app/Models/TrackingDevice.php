@@ -11,7 +11,7 @@ class TrackingDevice extends Model
 {
     use HasFactory;
 
-    protected $table = 'trackingdevices';
+    protected $table = 'tracking_devices';
 
     protected $primaryKey = 'device_id';
 
