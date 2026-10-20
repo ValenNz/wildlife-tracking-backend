@@ -2,64 +2,32 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable
+class User extends Model
 {
-    use HasApiTokens, HasFactory, Notifiable;
-
-    protected $table = 'users';
-
     protected $primaryKey = 'user_id';
-
-    public $incrementing = true;
-
-    protected $keyType = 'int';
-
-    public const UPDATED_AT = null;
-
+    public $incrementing = false;
+    protected $keyType = 'integer';
+    public $timestamps = false;
+    
     protected $fillable = [
-        'username',
-        'full_name',
+        'user_id',
+        'name',
         'email',
         'password',
         'role',
+        'created_at',
     ];
 
-    protected $hidden = [
-        'password',
+    protected $casts = [
+        'created_at' => 'datetime',
     ];
-
-    protected function casts(): array
-    {
-        return [
-            'password' => 'hashed',
-            'created_at' => 'datetime',
-        ];
-    }
 
     public function incidentReports(): HasMany
     {
         return $this->hasMany(IncidentReport::class, 'user_id', 'user_id');
-    }
-
-    public function geoZones(): HasMany
-    {
-        return $this->hasMany(GeoZone::class, 'created_by', 'user_id');
-    }
-
-    public function aiMediaUploads(): HasMany
-    {
-        return $this->hasMany(AIMediaUpload::class, 'uploaded_by', 'user_id');
-    }
-
-    public function aiPredictionsVerified(): HasMany
-    {
-        return $this->hasMany(AIPrediction::class, 'verified_by', 'user_id');
     }
 
     public function activityLogs(): HasMany
@@ -67,18 +35,8 @@ class User extends Authenticatable
         return $this->hasMany(ActivityLog::class, 'user_id', 'user_id');
     }
 
-    public function aggregateReports(): HasMany
-    {
-        return $this->hasMany(AggregateReport::class, 'generated_by', 'user_id');
-    }
-
     public function notifications(): HasMany
     {
         return $this->hasMany(Notification::class, 'user_id', 'user_id');
-    }
-
-    public function hasRole(string $role): bool
-    {
-        return $this->role === $role;
     }
 }

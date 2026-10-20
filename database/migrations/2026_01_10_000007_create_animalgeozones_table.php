@@ -8,20 +8,25 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('animalgeozones', function (Blueprint $table) {
-            $table->id('visit_id');
-            $table->foreignId('animal_id')->constrained('animals', 'animal_id')->cascadeOnDelete();
-            $table->foreignId('zone_id')->constrained('geozones', 'zone_id')->cascadeOnDelete();
-            $table->foreignId('entry_reading_id')->constrained('gpsreadings', 'reading_id')->cascadeOnDelete();
-            $table->foreignId('exit_reading_id')->nullable()->constrained('gpsreadings', 'reading_id')->nullOnDelete();
-            $table->decimal('duration_hours', 8, 2)->nullable();
-
-            $table->index(['animal_id', 'zone_id']);
+        Schema::create('animal_geo_zones', function (Blueprint $table) {
+            $table->unsignedBigInteger('visit_id')->primary();
+            $table->unsignedInteger('animal_id');
+            $table->unsignedInteger('zone_id');
+            $table->unsignedBigInteger('entry_reading_id')->nullable();
+            $table->timestamp('entered_at');
+            $table->timestamp('exited_at')->nullable();
+            
+            $table->foreign('animal_id')->references('animal_id')->on('animals')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('zone_id')->references('zone_id')->on('geo_zones')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('entry_reading_id')->references('reading_id')->on('gps_readings')->onDelete('set null')->onUpdate('cascade');
+            $table->index(['animal_id', 'entered_at'], 'idx_ag_animal_time');
+            $table->index(['zone_id', 'entered_at'], 'idx_ag_zone_time');
+            $table->index('entry_reading_id', 'idx_ag_entry_reading');
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('animalgeozones');
+        Schema::dropIfExists('animal_geo_zones');
     }
 };

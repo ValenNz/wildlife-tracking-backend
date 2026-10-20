@@ -9,14 +9,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('species', function (Blueprint $table) {
-            $table->id('species_id');
-            $table->string('common_name');
-            $table->string('scientific_name')->unique();
-            $table->enum('conservation_status', [
-                'Critically Endangered',
-                'Endangered',
-                'Vulnerable',
-            ]);
+            $table->unsignedInteger('species_id')->primary();
+            $table->string('common_name', 100);
+            $table->string('scientific_name', 150)->unique();
+            $table->string('conservation_status', 50);
+            
             $table->timestamps();
         });
     }
