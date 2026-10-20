@@ -12,50 +12,51 @@ class AnimalSeeder extends Seeder
     {
         $animals = [
             [
-                'scientific_name' => 'Pongo abelii',
-                'animal_code' => 'ORN-01',
-                'gender' => 'Tidak Diketahui',
-                'birth_date' => null,
+                'animal_id' => 1,
+                'species_id' => 1,
+                'name' => 'SATWA-742',
+                'birth_date' => '2023-08-04',
+                'gender' => 'male',
+                'is_active' => true,
             ],
             [
-                'scientific_name' => 'Panthera tigris sumatrae',
-                'animal_code' => 'HRM-01',
-                'gender' => 'Jantan',
-                'birth_date' => '2017-06-14',
+                'animal_id' => 2,
+                'species_id' => 2,
+                'name' => 'SATWA-281',
+                'birth_date' => '2019-12-28',
+                'gender' => 'unknown',
+                'is_active' => true,
             ],
             [
-                'scientific_name' => 'Dicerorhinus sumatrensis',
-                'animal_code' => 'BDK-01',
-                'gender' => 'Betina',
-                'birth_date' => '2019-03-02',
+                'animal_id' => 3,
+                'species_id' => 3,
+                'name' => 'SATWA-803',
+                'birth_date' => '2019-11-21',
+                'gender' => 'female',
+                'is_active' => true,
             ],
             [
-                'scientific_name' => 'Elephas maximus sumatrensis',
-                'animal_code' => 'GJS-01',
-                'gender' => 'Jantan',
-                'birth_date' => '2012-11-25',
+                'animal_id' => 4,
+                'species_id' => 4,
+                'name' => 'SATWA-387',
+                'birth_date' => '2022-03-18',
+                'gender' => 'female',
+                'is_active' => true,
             ],
             [
-                'scientific_name' => 'Rusa unicolor',
-                'animal_code' => 'RSA-01',
-                'gender' => 'Betina',
-                'birth_date' => '2021-08-09',
+                'animal_id' => 5,
+                'species_id' => 5,
+                'name' => 'SATWA-968',
+                'birth_date' => '2014-02-14',
+                'gender' => 'female',
+                'is_active' => true,
             ],
         ];
 
         foreach ($animals as $item) {
-            $species = Species::query()
-                ->where('scientific_name', $item['scientific_name'])
-                ->firstOrFail();
-
             Animal::query()->updateOrCreate(
-                ['animal_code' => $item['animal_code']],
-                [
-                    'species_id' => $species->species_id,
-                    'gender' => $item['gender'],
-                    'birth_date' => $item['birth_date'],
-                    'is_active' => true,
-                ],
+                ['animal_id' => $item['animal_id']],
+                $item,
             );
         }
     }

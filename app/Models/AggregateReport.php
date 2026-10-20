@@ -25,8 +25,8 @@ class AggregateReport extends Model
         'report_type',
         'period_start',
         'period_end',
-        'data_summary',
         'generated_at',
+        'file_path',
     ];
 
     protected function casts(): array
@@ -34,7 +34,6 @@ class AggregateReport extends Model
         return [
             'period_start' => 'date',
             'period_end' => 'date',
-            'data_summary' => 'array',
             'generated_at' => 'datetime',
         ];
     }

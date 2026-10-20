@@ -24,14 +24,15 @@ class AnimalGeoZone extends Model
         'animal_id',
         'zone_id',
         'entry_reading_id',
-        'exit_reading_id',
-        'duration_hours',
+        'entered_at',
+        'exited_at',
     ];
 
     protected function casts(): array
     {
         return [
-            'duration_hours' => 'float',
+            'entered_at' => 'datetime',
+            'exited_at' => 'datetime',
         ];
     }
 
@@ -48,10 +49,5 @@ class AnimalGeoZone extends Model
     public function entryReading(): BelongsTo
     {
         return $this->belongsTo(GPSReadings::class, 'entry_reading_id', 'reading_id');
-    }
-
-    public function exitReading(): BelongsTo
-    {
-        return $this->belongsTo(GPSReadings::class, 'exit_reading_id', 'reading_id');
     }
 }

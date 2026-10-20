@@ -23,8 +23,7 @@ class User extends Authenticatable
     public const UPDATED_AT = null;
 
     protected $fillable = [
-        'username',
-        'full_name',
+        'name',
         'email',
         'password',
         'role',
@@ -75,6 +74,11 @@ class User extends Authenticatable
     public function notifications(): HasMany
     {
         return $this->hasMany(Notification::class, 'user_id', 'user_id');
+    }
+
+    public function bookings(): HasMany
+    {
+        return $this->hasMany(Booking::class, 'visitor_id', 'visitor_id');
     }
 
     public function hasRole(string $role): bool

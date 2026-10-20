@@ -19,17 +19,26 @@ class GeoZone extends Model
 
     protected $keyType = 'int';
 
+    public const UPDATED_AT = null;
+
     protected $fillable = [
         'zone_name',
         'zone_type',
-        'polygon_data',
+        'center_lat',
+        'center_lon',
+        'radius_km',
+        'polygon_geojson',
         'created_by',
     ];
 
     protected function casts(): array
     {
         return [
-            'polygon_data' => 'array',
+            'center_lat' => 'decimal:6',
+            'center_lon' => 'decimal:6',
+            'radius_km' => 'decimal:3',
+            'polygon_geojson' => 'array',
+            'created_at' => 'datetime',
         ];
     }
 

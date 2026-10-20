@@ -19,18 +19,29 @@ class TrackingDevice extends Model
 
     protected $keyType = 'int';
 
+    public const UPDATED_AT = null;
+    public const CREATED_AT = null;
+
     protected $fillable = [
         'animal_id',
         'model',
         'installation_date',
         'battery_life_months',
-        'status',
+        'is_active',
+        'device_condition',
+        'battery_level',
+        'signal_strength',
+        'last_recorded_at',
     ];
 
     protected function casts(): array
     {
         return [
             'installation_date' => 'date',
+            'is_active' => 'boolean',
+            'battery_level' => 'integer',
+            'signal_strength' => 'integer',
+            'last_recorded_at' => 'datetime',
         ];
     }
 

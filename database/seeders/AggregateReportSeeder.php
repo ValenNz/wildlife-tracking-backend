@@ -3,48 +3,64 @@
 namespace Database\Seeders;
 
 use App\Models\AggregateReport;
-use App\Models\Animal;
-use App\Models\Species;
-use App\Models\TrackingDevice;
-use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class AggregateReportSeeder extends Seeder
 {
     public function run(): void
     {
-        $admins = User::query()->where('role', 'pengambil_kebijakan')->get();
-        $fallback = User::query()->firstOrFail();
-
-        $reportTypes = [
-            'Rekapitulasi Bulanan Satwa',
-            'Rekapitulasi Triwulan Perangkat',
-            'Laporan Tahunan Konservasi',
-            'Laporan Zona Berisiko',
-            'Ringkasan Modul AI',
+        $reports = [
+            [
+                'report_id' => 1,
+                'generated_by' => 1,
+                'report_type' => 'daily',
+                'period_start' => '2026-10-19',
+                'period_end' => '2026-10-19',
+                'generated_at' => '2026-10-19 18:00:00',
+                'file_path' => 'reports/daily_20261019.pdf',
+            ],
+            [
+                'report_id' => 2,
+                'generated_by' => 2,
+                'report_type' => 'weekly',
+                'period_start' => '2026-10-13',
+                'period_end' => '2026-10-19',
+                'generated_at' => '2026-10-19 18:30:00',
+                'file_path' => 'reports/weekly_20261019.pdf',
+            ],
+            [
+                'report_id' => 3,
+                'generated_by' => 1,
+                'report_type' => 'monthly',
+                'period_start' => '2026-10-01',
+                'period_end' => '2026-10-31',
+                'generated_at' => '2026-10-19 19:00:00',
+                'file_path' => 'reports/monthly_202610.pdf',
+            ],
+            [
+                'report_id' => 4,
+                'generated_by' => 3,
+                'report_type' => 'daily',
+                'period_start' => '2026-10-18',
+                'period_end' => '2026-10-18',
+                'generated_at' => '2026-10-18 18:00:00',
+                'file_path' => 'reports/daily_20261018.pdf',
+            ],
+            [
+                'report_id' => 5,
+                'generated_by' => 2,
+                'report_type' => 'weekly',
+                'period_start' => '2026-10-06',
+                'period_end' => '2026-10-12',
+                'generated_at' => '2026-10-12 18:30:00',
+                'file_path' => 'reports/weekly_20261012.pdf',
+            ],
         ];
 
-        foreach ($reportTypes as $index => $reportType) {
-            $generator = $admins->get($index % max($admins->count(), 1)) ?? $fallback;
-
-            $periodStart = now()->subMonths($index + 1)->startOfMonth();
-            $periodEnd = now()->subMonths($index)->endOfMonth();
-
+        foreach ($reports as $item) {
             AggregateReport::query()->updateOrCreate(
-                ['report_type' => $reportType],
-                [
-                    'generated_by' => $generator->user_id,
-                    'period_start' => $periodStart->toDateString(),
-                    'period_end' => $periodEnd->toDateString(),
-                    'data_summary' => [
-                        'total_animals' => Animal::query()->count(),
-                        'active_animals' => Animal::query()->where('is_active', true)->count(),
-                        'total_species' => Species::query()->count(),
-                        'total_devices' => TrackingDevice::query()->count(),
-                        'active_devices' => TrackingDevice::query()->where('status', 'Active')->count(),
-                    ],
-                    'generated_at' => $periodEnd->copy()->setTime(8, 0, 0),
-                ],
+                ['report_id' => $item['report_id']],
+                $item,
             );
         }
     }

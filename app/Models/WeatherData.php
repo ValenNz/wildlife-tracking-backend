@@ -22,19 +22,26 @@ class WeatherData extends Model
 
     protected $fillable = [
         'reading_id',
-        'temperature',
-        'humidity',
-        'rainfall',
-        'recorded_at',
+        'latitude',
+        'longitude',
+        'observed_at',
+        'temperature_c',
+        'rainfall_mm',
+        'humidity_percent',
+        'pressure_hpa',
+        'source',
     ];
 
     protected function casts(): array
     {
         return [
-            'temperature' => 'float',
-            'humidity' => 'float',
-            'rainfall' => 'float',
-            'recorded_at' => 'datetime',
+            'latitude' => 'decimal:6',
+            'longitude' => 'decimal:6',
+            'observed_at' => 'datetime',
+            'temperature_c' => 'decimal:2',
+            'rainfall_mm' => 'decimal:2',
+            'humidity_percent' => 'decimal:2',
+            'pressure_hpa' => 'decimal:2',
         ];
     }
 

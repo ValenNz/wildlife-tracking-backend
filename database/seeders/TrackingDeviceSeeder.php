@@ -11,26 +11,72 @@ class TrackingDeviceSeeder extends Seeder
     public function run(): void
     {
         $devices = [
-            ['animal_code' => 'ORN-01', 'model' => 'Vectronic Vertex Lite', 'battery_life_months' => 18, 'status' => 'Active'],
-            ['animal_code' => 'HRM-01', 'model' => 'Lotek GPS-400', 'battery_life_months' => 24, 'status' => 'Active'],
-            ['animal_code' => 'BDK-01', 'model' => 'Vectronic Vertex Plus', 'battery_life_months' => 12, 'status' => 'Active'],
-            ['animal_code' => 'GJS-01', 'model' => 'Lotek GPS-500', 'battery_life_months' => 36, 'status' => 'Maintenance'],
-            ['animal_code' => 'RSA-01', 'model' => 'Sirtrack Iridium 100', 'battery_life_months' => 15, 'status' => 'Inactive'],
+            [
+                'device_id' => 1,
+                'animal_id' => 1,
+                'model' => 'Lotek Iridium TrackLite',
+                'installation_date' => '2026-01-21',
+                'battery_life_months' => 12,
+                'is_active' => true,
+                'device_condition' => 'normal',
+                'battery_level' => 87,
+                'signal_strength' => 4,
+                'last_recorded_at' => '2026-10-19 10:00:00',
+            ],
+            [
+                'device_id' => 2,
+                'animal_id' => 2,
+                'model' => 'Lotek GPS-Plus',
+                'installation_date' => '2026-08-22',
+                'battery_life_months' => 12,
+                'is_active' => true,
+                'device_condition' => 'normal',
+                'battery_level' => 53,
+                'signal_strength' => 3,
+                'last_recorded_at' => '2026-10-19 09:30:00',
+            ],
+            [
+                'device_id' => 3,
+                'animal_id' => 3,
+                'model' => 'Televilt Telemetry',
+                'installation_date' => '2026-02-12',
+                'battery_life_months' => 12,
+                'is_active' => true,
+                'device_condition' => 'normal',
+                'battery_level' => 98,
+                'signal_strength' => 4,
+                'last_recorded_at' => '2026-10-19 11:15:00',
+            ],
+            [
+                'device_id' => 4,
+                'animal_id' => 4,
+                'model' => 'Lotek GPS-Plus',
+                'installation_date' => '2026-04-07',
+                'battery_life_months' => 12,
+                'is_active' => true,
+                'device_condition' => 'damaged',
+                'battery_level' => 25,
+                'signal_strength' => 1,
+                'last_recorded_at' => '2026-10-18 15:20:00',
+            ],
+            [
+                'device_id' => 5,
+                'animal_id' => 5,
+                'model' => 'Lotek GPS-Plus',
+                'installation_date' => '2026-07-18',
+                'battery_life_months' => 12,
+                'is_active' => true,
+                'device_condition' => 'lost',
+                'battery_level' => 0,
+                'signal_strength' => 0,
+                'last_recorded_at' => '2026-10-15 08:45:00',
+            ],
         ];
 
         foreach ($devices as $item) {
-            $animal = Animal::query()
-                ->where('animal_code', $item['animal_code'])
-                ->firstOrFail();
-
             TrackingDevice::query()->updateOrCreate(
-                ['animal_id' => $animal->animal_id],
-                [
-                    'model' => $item['model'],
-                    'installation_date' => '2024-02-15',
-                    'battery_life_months' => $item['battery_life_months'],
-                    'status' => $item['status'],
-                ],
+                ['device_id' => $item['device_id']],
+                $item,
             );
         }
     }

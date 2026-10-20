@@ -2,35 +2,85 @@
 
 namespace Database\Seeders;
 
-use App\Models\AIMediaUpload;
 use App\Models\AIPrediction;
-use App\Models\Species;
-use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class AiPredictionSeeder extends Seeder
 {
     public function run(): void
     {
-        $media = AIMediaUpload::query()->orderBy('media_id')->get();
-        $species = Species::query()->orderBy('species_id')->get();
-        $researchers = User::query()->where('role', 'peneliti_ekologi')->get();
+        $predictions = [
+            [
+                'prediction_id' => 1,
+                'media_id' => 1,
+                'predicted_species_id' => 1,
+                'confidence' => 0.9829,
+                'model_version' => 'YOLOv8-v1',
+                'processing_status' => 'completed',
+                'processed_at' => '2026-10-19 10:35:00',
+                'verification_status' => 'confirmed',
+                'verified_species_id' => 1,
+                'verified_by' => 2,
+                'verified_at' => '2026-10-19 11:00:00',
+            ],
+            [
+                'prediction_id' => 2,
+                'media_id' => 2,
+                'predicted_species_id' => 2,
+                'confidence' => 0.9456,
+                'model_version' => 'YOLOv8-v1',
+                'processing_status' => 'completed',
+                'processed_at' => '2026-10-19 09:50:00',
+                'verification_status' => 'confirmed',
+                'verified_species_id' => 2,
+                'verified_by' => 1,
+                'verified_at' => '2026-10-19 10:15:00',
+            ],
+            [
+                'prediction_id' => 3,
+                'media_id' => 3,
+                'predicted_species_id' => 3,
+                'confidence' => 0.8734,
+                'model_version' => 'YOLOv8-v1',
+                'processing_status' => 'completed',
+                'processed_at' => '2026-10-19 11:25:00',
+                'verification_status' => 'pending',
+                'verified_species_id' => null,
+                'verified_by' => null,
+                'verified_at' => null,
+            ],
+            [
+                'prediction_id' => 4,
+                'media_id' => 4,
+                'predicted_species_id' => 4,
+                'confidence' => 0.9123,
+                'model_version' => 'YOLOv8-v1',
+                'processing_status' => 'completed',
+                'processed_at' => '2026-10-18 15:35:00',
+                'verification_status' => 'confirmed',
+                'verified_species_id' => 4,
+                'verified_by' => 2,
+                'verified_at' => '2026-10-18 16:00:00',
+            ],
+            [
+                'prediction_id' => 5,
+                'media_id' => 5,
+                'predicted_species_id' => 5,
+                'confidence' => 0.7891,
+                'model_version' => 'YOLOv8-v1',
+                'processing_status' => 'completed',
+                'processed_at' => '2026-10-15 09:10:00',
+                'verification_status' => 'rejected',
+                'verified_species_id' => 5,
+                'verified_by' => 1,
+                'verified_at' => '2026-10-15 10:30:00',
+            ],
+        ];
 
-        $confidenceScores = [96.40, 91.75, 88.20, 74.60, 63.15];
-
-        foreach ($media as $index => $item) {
-            $predicted = $species->get($index % $species->count());
-            $verifier = $researchers->get($index % max($researchers->count(), 1));
-
+        foreach ($predictions as $item) {
             AIPrediction::query()->updateOrCreate(
-                ['media_id' => $item->media_id],
-                [
-                    'predicted_species_id' => $predicted->species_id,
-                    'confidence_score' => $confidenceScores[$index % count($confidenceScores)],
-                    'predicted_at' => now()->subDays($index + 1)->setTime(10, 20, 0),
-                    'verified_by' => $verifier?->user_id,
-                    'verified_species_id' => $index === 4 ? $species->first()->species_id : $predicted->species_id,
-                ],
+                ['prediction_id' => $item['prediction_id']],
+                $item,
             );
         }
     }

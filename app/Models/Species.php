@@ -18,6 +18,9 @@ class Species extends Model
 
     protected $keyType = 'int';
 
+    public const UPDATED_AT = null;
+    public const CREATED_AT = null;
+
     protected $fillable = [
         'common_name',
         'scientific_name',

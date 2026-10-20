@@ -3,42 +3,70 @@
 namespace Database\Seeders;
 
 use App\Models\GPSReadings;
-use App\Models\TrackingDevice;
 use Illuminate\Database\Seeder;
 
 class GpsReadingSeeder extends Seeder
 {
     public function run(): void
     {
-        $trajectories = [
-            ['lat' => 3.5512, 'lon' => 98.1234],
-            ['lat' => 3.6018, 'lon' => 97.9562],
-            ['lat' => 3.4785, 'lon' => 98.2011],
-            ['lat' => 3.6723, 'lon' => 97.8894],
-            ['lat' => 3.3947, 'lon' => 98.0456],
+        $readings = [
+            [
+                'reading_id' => 1,
+                'device_id' => 1,
+                'latitude' => 3.658620,
+                'longitude' => 97.731964,
+                'recorded_at' => '2026-10-19 10:00:00',
+                'altitude_meters' => 489.16,
+                'accuracy_meters' => 17.06,
+                'checksum' => 'f468e4c385bf213285a191088c66bbe68652d3caa6f18f49dd80f77e36f6ba57',
+            ],
+            [
+                'reading_id' => 2,
+                'device_id' => 2,
+                'latitude' => 3.967782,
+                'longitude' => 97.381211,
+                'recorded_at' => '2026-10-19 09:30:00',
+                'altitude_meters' => 379.69,
+                'accuracy_meters' => 8.65,
+                'checksum' => '4a33e9b80e758d0ee44c4cbbf53ea104f2485dda61ba0747b173c573f537b0f9',
+            ],
+            [
+                'reading_id' => 3,
+                'device_id' => 3,
+                'latitude' => 3.730805,
+                'longitude' => 97.613118,
+                'recorded_at' => '2026-10-19 11:15:00',
+                'altitude_meters' => 517.81,
+                'accuracy_meters' => 16.03,
+                'checksum' => 'fdad1e5a093cfaa2f8d4f1db9be8ed9646c7e426f8d303753dc0ff995d027b9a',
+            ],
+            [
+                'reading_id' => 4,
+                'device_id' => 4,
+                'latitude' => 3.756809,
+                'longitude' => 97.450071,
+                'recorded_at' => '2026-10-18 15:20:00',
+                'altitude_meters' => 205.69,
+                'accuracy_meters' => 17.35,
+                'checksum' => '3f25373bcb50467e3b29408a5d03eb790ab900e892a06bea001b69cef7936db7',
+            ],
+            [
+                'reading_id' => 5,
+                'device_id' => 5,
+                'latitude' => 3.899724,
+                'longitude' => 97.045250,
+                'recorded_at' => '2026-10-15 08:45:00',
+                'altitude_meters' => 125.96,
+                'accuracy_meters' => 13.73,
+                'checksum' => '633b3eb374f92b1e3b49f2bbdd30a30601bc8bce1353f2e7f46d46af8c9232f8',
+            ],
         ];
 
-        foreach (TrackingDevice::query()->orderBy('device_id')->get() as $index => $device) {
-            $origin = $trajectories[$index % count($trajectories)];
-
-            for ($step = 0; $step < 5; $step++) {
-                $latitude = $origin['lat'] + ($step * 0.0042) - 0.0084;
-                $longitude = $origin['lon'] + ($step * 0.0037) - 0.0074;
-
-                $recordedAt = now()->subDays(4 - $step)->setTime(6 + $step, 15, 0);
-
-                GPSReadings::query()->updateOrCreate(
-                    [
-                        'device_id' => $device->device_id,
-                        'recorded_at' => $recordedAt->toDateTimeString(),
-                    ],
-                    [
-                        'latitude' => round($latitude, 8),
-                        'longitude' => round($longitude, 8),
-                        'accuracy_meters' => round(fake('id_ID')->randomFloat(2, 3, 25), 2),
-                    ],
-                );
-            }
+        foreach ($readings as $item) {
+            GPSReadings::query()->updateOrCreate(
+                ['reading_id' => $item['reading_id']],
+                $item,
+            );
         }
     }
 }

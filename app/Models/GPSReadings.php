@@ -26,16 +26,19 @@ class GPSReadings extends Model
         'latitude',
         'longitude',
         'recorded_at',
+        'altitude_meters',
         'accuracy_meters',
+        'checksum',
     ];
 
     protected function casts(): array
     {
         return [
             'recorded_at' => 'datetime',
-            'latitude' => 'float',
-            'longitude' => 'float',
-            'accuracy_meters' => 'float',
+            'latitude' => 'decimal:6',
+            'longitude' => 'decimal:6',
+            'altitude_meters' => 'decimal:2',
+            'accuracy_meters' => 'decimal:2',
         ];
     }
 

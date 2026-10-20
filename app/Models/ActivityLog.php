@@ -18,7 +18,7 @@ class ActivityLog extends Model
 
     protected $keyType = 'int';
 
-    public const UPDATED_AT = null;
+    public $timestamps = false;
 
     protected $fillable = [
         'user_id',
@@ -29,7 +29,7 @@ class ActivityLog extends Model
     protected function casts(): array
     {
         return [
-            'created_at' => 'datetime',
+            'timestamp' => 'datetime',
         ];
     }
 

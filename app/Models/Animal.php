@@ -20,9 +20,12 @@ class Animal extends Model
 
     protected $keyType = 'int';
 
+    public const UPDATED_AT = null;
+    public const CREATED_AT = null;
+
     protected $fillable = [
         'species_id',
-        'animal_code',
+        'name',
         'birth_date',
         'gender',
         'is_active',
@@ -54,5 +57,10 @@ class Animal extends Model
     public function notifications(): HasMany
     {
         return $this->hasMany(Notification::class, 'animal_id', 'animal_id');
+    }
+
+    public function incidentReports(): HasMany
+    {
+        return $this->hasMany(IncidentReport::class, 'animal_code', 'name');
     }
 }

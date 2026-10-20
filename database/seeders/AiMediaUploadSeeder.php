@@ -3,33 +3,59 @@
 namespace Database\Seeders;
 
 use App\Models\AIMediaUpload;
-use App\Models\IncidentReport;
-use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class AiMediaUploadSeeder extends Seeder
 {
     public function run(): void
     {
-        $conservators = User::query()
-            ->where('role', 'konservasionis_lapangan')
-            ->get();
+        $uploads = [
+            [
+                'media_id' => 1,
+                'uploaded_by' => 1,
+                'report_id' => 1,
+                'media_type' => 'image',
+                'file_path' => 'uploads/media_001.jpg',
+                'uploaded_at' => '2026-10-19 10:30:00',
+            ],
+            [
+                'media_id' => 2,
+                'uploaded_by' => 2,
+                'report_id' => 2,
+                'media_type' => 'video',
+                'file_path' => 'uploads/media_002.mp4',
+                'uploaded_at' => '2026-10-19 09:45:00',
+            ],
+            [
+                'media_id' => 3,
+                'uploaded_by' => 3,
+                'report_id' => 3,
+                'media_type' => 'image',
+                'file_path' => 'uploads/media_003.jpg',
+                'uploaded_at' => '2026-10-19 11:20:00',
+            ],
+            [
+                'media_id' => 4,
+                'uploaded_by' => 1,
+                'report_id' => 4,
+                'media_type' => 'image',
+                'file_path' => 'uploads/media_004.jpg',
+                'uploaded_at' => '2026-10-18 15:30:00',
+            ],
+            [
+                'media_id' => 5,
+                'uploaded_by' => 2,
+                'report_id' => 5,
+                'media_type' => 'video',
+                'file_path' => 'uploads/media_005.mp4',
+                'uploaded_at' => '2026-10-15 09:00:00',
+            ],
+        ];
 
-        $reports = IncidentReport::query()->orderBy('report_id')->get();
-
-        for ($index = 0; $index < 5; $index++) {
-            $uploader = $conservators->get($index % max($conservators->count(), 1));
-            $report = $reports->get($index % max($reports->count(), 1));
-            $isVideo = $index % 2 === 1;
-
+        foreach ($uploads as $item) {
             AIMediaUpload::query()->updateOrCreate(
-                ['file_path' => sprintf('field-uploads/2026/03/sample-%02d.%s', $index + 1, $isVideo ? 'mp4' : 'jpg')],
-                [
-                    'uploaded_by' => $uploader?->user_id,
-                    'report_id' => $report?->report_id,
-                    'media_type' => $isVideo ? 'video' : 'image',
-                    'uploaded_at' => now()->subDays($index + 1)->setTime(10, 15, 0),
-                ],
+                ['media_id' => $item['media_id']],
+                $item,
             );
         }
     }

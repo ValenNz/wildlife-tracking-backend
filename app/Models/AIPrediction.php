@@ -23,17 +23,22 @@ class AIPrediction extends Model
     protected $fillable = [
         'media_id',
         'predicted_species_id',
-        'confidence_score',
-        'predicted_at',
-        'verified_by',
+        'confidence',
+        'model_version',
+        'processing_status',
+        'processed_at',
+        'verification_status',
         'verified_species_id',
+        'verified_by',
+        'verified_at',
     ];
 
     protected function casts(): array
     {
         return [
-            'confidence_score' => 'float',
-            'predicted_at' => 'datetime',
+            'confidence' => 'decimal:4',
+            'processed_at' => 'datetime',
+            'verified_at' => 'datetime',
         ];
     }
 

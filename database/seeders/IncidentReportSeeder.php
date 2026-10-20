@@ -3,59 +3,74 @@
 namespace Database\Seeders;
 
 use App\Models\IncidentReport;
-use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class IncidentReportSeeder extends Seeder
 {
     public function run(): void
     {
-        $conservators = User::query()
-            ->where('role', 'konservasionis_lapangan')
-            ->get();
-
         $reports = [
             [
-                'location' => 'Desa Bukit Lawang',
-                'incident_type' => 'Pertemuan Satwa dengan Petugas',
-                'description' => 'Seekor orangutan terlihat di dekat pos jaga pada pagi hari. Tim mencatat waktu dan kondisi lingkungan sekitar.',
+                'report_id' => 1,
+                'user_id' => 1,
+                'incident_type' => 'observasi',
+                'animal_code' => 'SATWA-742',
+                'location' => 'Zona Konservasi Utara',
+                'description' => 'Satwa terlihat sehat, bergerak normal',
+                'timestamp' => '2026-10-19 10:30:00',
+                'photo_url' => 'uploads/img_001.jpg',
+                'sync_status' => 'synced',
             ],
             [
-                'location' => 'Jalan Lintas Sumatera KM 35',
-                'incident_type' => 'Satwa Melintasi Jalan Raya',
-                'description' => 'Harimau sumatera menyeberang jalan raya pada malam hari. Informasi diteruskan kepada petugas lintas wilayah.',
+                'report_id' => 2,
+                'user_id' => 2,
+                'incident_type' => 'konflik',
+                'animal_code' => 'SATWA-281',
+                'location' => 'Zona Perkebunan Tengah',
+                'description' => 'Satwa masuk area perkebunan warga',
+                'timestamp' => '2026-10-19 09:45:00',
+                'photo_url' => 'uploads/img_002.jpg',
+                'sync_status' => 'synced',
             ],
             [
-                'location' => 'Perkebunan Kelapa Sawit Kuala Batang',
-                'incident_type' => 'Ancaman Within Lahan',
-                'description' => 'Jejak aktivitas satwa terdeteksi di dalam lahan perkebunan. Perlu penjagaan terjadwal oleh tim lapangan.',
+                'report_id' => 3,
+                'user_id' => 3,
+                'incident_type' => 'device_alert',
+                'animal_code' => 'SATWA-803',
+                'location' => 'Zona Permukiman Selatan',
+                'description' => 'Perangkat GPS sinyal lemah',
+                'timestamp' => '2026-10-19 11:20:00',
+                'photo_url' => null,
+                'sync_status' => 'pending_sync',
             ],
             [
-                'location' => 'Koridor Sungai Batang Gadis',
-                'incident_type' => 'Penjarahan Ilegal Terdeteksi',
-                'description' => 'Ditemukan jerat pada jalur koridor ekologi. Bukti diamankan sementara tim melakukan Penyelidikan.',
+                'report_id' => 4,
+                'user_id' => 1,
+                'incident_type' => 'observasi',
+                'animal_code' => 'SATWA-387',
+                'location' => 'Zona Jalan Raya Timur',
+                'description' => 'Satwa melintasi jalan raya',
+                'timestamp' => '2026-10-18 15:30:00',
+                'photo_url' => 'uploads/img_003.jpg',
+                'sync_status' => 'synced',
             ],
             [
-                'location' => 'Desa Sungai Sembilan',
-                'incident_type' => 'Satwa Terluka',
-                'description' => 'Rusa generasi muda ditemukan dengan luka ringan. Hewan dipindahkan ke pos rescue setelah pemeriksaan awal.',
+                'report_id' => 5,
+                'user_id' => 2,
+                'incident_type' => 'perambahan',
+                'animal_code' => 'SATWA-968',
+                'location' => 'Zona Hutan Lindung Barat',
+                'description' => 'Ditemukan aktivitas ilegal di zona lindung',
+                'timestamp' => '2026-10-15 09:00:00',
+                'photo_url' => 'uploads/img_004.jpg',
+                'sync_status' => 'failed',
             ],
         ];
 
-        foreach ($reports as $index => $item) {
-            $reporter = $conservators->get($index % max($conservators->count(), 1));
-
+        foreach ($reports as $item) {
             IncidentReport::query()->updateOrCreate(
-                [
-                    'location' => $item['location'],
-                    'incident_type' => $item['incident_type'],
-                ],
-                [
-                    'user_id' => $reporter?->user_id,
-                    'description' => $item['description'],
-                    'reported_at' => now()->subDays($index + 1)->setTime(9, 30, 0),
-                    'media_url' => null,
-                ],
+                ['report_id' => $item['report_id']],
+                $item,
             );
         }
     }

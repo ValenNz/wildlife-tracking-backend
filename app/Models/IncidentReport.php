@@ -23,17 +23,19 @@ class IncidentReport extends Model
 
     protected $fillable = [
         'user_id',
-        'location',
         'incident_type',
+        'animal_code',
+        'location',
         'description',
-        'reported_at',
-        'media_url',
+        'timestamp',
+        'photo_url',
+        'sync_status',
     ];
 
     protected function casts(): array
     {
         return [
-            'reported_at' => 'datetime',
+            'timestamp' => 'datetime',
         ];
     }
 

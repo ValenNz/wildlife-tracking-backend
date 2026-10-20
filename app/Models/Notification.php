@@ -22,11 +22,11 @@ class Notification extends Model
 
     protected $fillable = [
         'user_id',
+        'notification_type',
+        'message',
         'animal_id',
         'zone_id',
         'device_id',
-        'title',
-        'message',
         'is_read',
     ];
 
