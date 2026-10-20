@@ -8,22 +8,23 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('aggregatereports', function (Blueprint $table) {
-            $table->id('report_id');
-            $table->foreignId('generated_by')->nullable()->constrained('users', 'user_id')->nullOnDelete();
-            $table->string('report_type');
+        Schema::create('aggregate_reports', function (Blueprint $table) {
+            $table->unsignedInteger('report_id')->primary();
+            $table->unsignedInteger('generated_by')->nullable();
+            $table->enum('report_type', ['daily', 'weekly', 'monthly']);
             $table->date('period_start');
             $table->date('period_end');
-            $table->json('data_summary');
-            $table->timestamp('generated_at');
-
-            $table->index('generated_by');
-            $table->index(['period_start', 'period_end']);
+            $table->timestamp('generated_at')->useCurrent();
+            $table->string('file_path', 500)->nullable();
+            
+            $table->foreign('generated_by')->references('user_id')->on('users')->onDelete('set null')->onUpdate('cascade');
+            $table->index(['report_type', 'period_start', 'period_end'], 'idx_ar_period');
+            $table->index('generated_by', 'idx_ar_user');
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('aggregatereports');
+        Schema::dropIfExists('aggregate_reports');
     }
 };

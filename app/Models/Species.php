@@ -2,17 +2,13 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Species extends Model
 {
-    use HasFactory;
-
-    protected $table = 'species';
-
     protected $primaryKey = 'species_id';
+<<<<<<< HEAD
 
     public $incrementing = true;
 
@@ -21,7 +17,13 @@ class Species extends Model
     public const UPDATED_AT = null;
     public const CREATED_AT = null;
 
+=======
+    public $incrementing = false;
+    protected $keyType = 'integer';
+    
+>>>>>>> 3de367708937d5e810dcfc4b431e1ca54441daf1
     protected $fillable = [
+        'species_id',
         'common_name',
         'scientific_name',
         'conservation_status',
@@ -31,6 +33,7 @@ class Species extends Model
     {
         return $this->hasMany(Animal::class, 'species_id', 'species_id');
     }
+<<<<<<< HEAD
 
     public function aiPredictions(): HasMany
     {
@@ -41,4 +44,6 @@ class Species extends Model
     {
         return $this->hasMany(AIPrediction::class, 'verified_species_id', 'species_id');
     }
+=======
+>>>>>>> 3de367708937d5e810dcfc4b431e1ca54441daf1
 }

@@ -2,19 +2,14 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Animal extends Model
 {
-    use HasFactory;
-
-    protected $table = 'animals';
-
     protected $primaryKey = 'animal_id';
+<<<<<<< HEAD
 
     public $incrementing = true;
 
@@ -23,7 +18,14 @@ class Animal extends Model
     public const UPDATED_AT = null;
     public const CREATED_AT = null;
 
+=======
+    public $incrementing = false;
+    protected $keyType = 'integer';
+    public $timestamps = false;
+    
+>>>>>>> 3de367708937d5e810dcfc4b431e1ca54441daf1
     protected $fillable = [
+        'animal_id',
         'species_id',
         'name',
         'birth_date',
@@ -31,28 +33,26 @@ class Animal extends Model
         'is_active',
     ];
 
-    protected function casts(): array
-    {
-        return [
-            'birth_date' => 'date',
-            'is_active' => 'boolean',
-        ];
-    }
+    protected $casts = [
+        'birth_date' => 'date',
+        'is_active' => 'boolean',
+    ];
 
     public function species(): BelongsTo
     {
         return $this->belongsTo(Species::class, 'species_id', 'species_id');
     }
 
-    public function trackingDevice(): HasOne
+    public function trackingDevice(): HasMany
     {
-        return $this->hasOne(TrackingDevice::class, 'animal_id', 'animal_id');
+        return $this->hasMany(TrackingDevice::class, 'animal_id', 'animal_id');
     }
 
     public function geoZoneVisits(): HasMany
     {
         return $this->hasMany(AnimalGeoZone::class, 'animal_id', 'animal_id');
     }
+<<<<<<< HEAD
 
     public function notifications(): HasMany
     {
@@ -63,4 +63,6 @@ class Animal extends Model
     {
         return $this->hasMany(IncidentReport::class, 'animal_code', 'name');
     }
+=======
+>>>>>>> 3de367708937d5e810dcfc4b431e1ca54441daf1
 }

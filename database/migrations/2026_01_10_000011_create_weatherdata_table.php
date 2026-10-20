@@ -8,20 +8,26 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('weatherdata', function (Blueprint $table) {
-            $table->id('weather_id');
-            $table->foreignId('reading_id')->constrained('gpsreadings', 'reading_id')->cascadeOnDelete();
-            $table->decimal('temperature', 5, 2);
-            $table->decimal('humidity', 5, 2);
-            $table->decimal('rainfall', 5, 2);
-            $table->timestamp('recorded_at');
-
-            $table->index('reading_id');
+        Schema::create('weather_data', function (Blueprint $table) {
+            $table->unsignedBigInteger('weather_id')->primary();
+            $table->unsignedBigInteger('reading_id')->nullable();
+            $table->decimal('latitude', 9, 6);
+            $table->decimal('longitude', 10, 6);
+            $table->timestamp('observed_at');
+            $table->decimal('temperature_c', 5, 2)->nullable();
+            $table->decimal('rainfall_mm', 7, 2)->nullable();
+            $table->decimal('humidity_percent', 5, 2)->nullable();
+            $table->decimal('pressure_hpa', 7, 2)->nullable();
+            $table->string('source', 50)->default('WeatherAPI.com');
+            
+            $table->foreign('reading_id')->references('reading_id')->on('gps_readings')->onDelete('set null')->onUpdate('cascade');
+            $table->index('observed_at', 'idx_weather_time');
+            $table->index('reading_id', 'idx_weather_reading');
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('weatherdata');
+        Schema::dropIfExists('weather_data');
     }
 };
