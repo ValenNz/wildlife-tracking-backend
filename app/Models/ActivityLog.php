@@ -14,11 +14,11 @@ class ActivityLog extends Model
 
     protected $primaryKey = 'log_id';
 
+    // Karena kita menggunakan $table->id(), ini harus true
     public $incrementing = true;
-
     protected $keyType = 'int';
 
-    public $timestamps = false;
+    public $timestamps = false; // Kita hanya pakai 'timestamp' manual
 
     protected $fillable = [
         'user_id',

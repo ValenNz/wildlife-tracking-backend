@@ -47,6 +47,11 @@ class GPSReadings extends Model
         return $this->belongsTo(TrackingDevice::class, 'device_id', 'device_id');
     }
 
+    public function trackingDevice(): BelongsTo
+    {
+        return $this->belongsTo(TrackingDevice::class, 'device_id', 'device_id');
+    }
+
     public function zoneVisits(): HasMany
     {
         return $this->hasMany(AnimalGeoZone::class, 'entry_reading_id', 'reading_id');

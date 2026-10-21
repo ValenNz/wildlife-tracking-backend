@@ -14,10 +14,11 @@ class AuthController extends Controller
 {
     private const TOKEN_NAME = 'auth_token';
 
-    public function login(Request $request): JsonResponse
+     public function login(Request $request): JsonResponse
     {
+        // 1. Ubah validasi dari 'username' menjadi 'email'
         $validator = Validator::make($request->all(), [
-            'username' => ['required', 'string'],
+            'email' => ['required', 'email'], 
             'password' => ['required', 'string'],
         ]);
 
@@ -27,18 +28,18 @@ class AuthController extends Controller
 
         $credentials = $validator->validated();
 
+        // 2. Ubah query pencarian dari 'username' menjadi 'email'
         $user = User::query()
-            ->where('username', $credentials['username'])
+            ->where('email', $credentials['email'])
             ->first();
 
         if ($user === null || ! Hash::check($credentials['password'], $user->password)) {
-            return $this->failed('Username atau password salah.', 401, [
+            return $this->failed('Email atau password salah.', 401, [
                 'credentials' => ['Kredensial tidak valid'],
             ]);
         }
 
         $user->tokens()->delete();
-
         $token = $user->createToken(self::TOKEN_NAME)->plainTextToken;
 
         ActivityLog::query()->create([
@@ -52,6 +53,19 @@ class AuthController extends Controller
             'user' => $this->presentUser($user),
         ]);
     }
+
+    private function presentUser(User $user): array
+    {
+        return [
+            'user_id' => $user->user_id,
+            'username' => $user->name, 
+            'full_name' => $user->name, 
+            'email' => $user->email,
+            'role' => $user->role,
+        ];
+    }
+
+    
 
     public function me(Request $request): JsonResponse
     {
@@ -67,16 +81,7 @@ class AuthController extends Controller
         return $this->success('Logout berhasil.');
     }
 
-    private function presentUser(User $user): array
-    {
-        return [
-            'user_id' => $user->user_id,
-            'username' => $user->username,
-            'full_name' => $user->full_name,
-            'email' => $user->email,
-            'role' => $user->role,
-        ];
-    }
+    
 
     private function success(string $message, mixed $data = null, int $status = 200): JsonResponse
     {
