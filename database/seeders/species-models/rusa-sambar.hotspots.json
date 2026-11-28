@@ -1,0 +1,20 @@
+[
+ {
+  "label": "Ranggah tiga cabang",
+  "description": "Jantan memiliki ranggah sederhana bercabang tiga yang tumbuh dan tanggal setiap tahun.",
+  "position": "0.250m 2.250m 0.750m",
+  "normal": "0.700m 0.700m 0.000m"
+ },
+ {
+  "label": "Rusa terbesar di Asia Tenggara",
+  "description": "Tinggi bahu ±1,0–1,6 m; jantan bisa >200 kg.",
+  "position": "0.260m 1.050m 0.000m",
+  "normal": "1.000m 0.000m 0.000m"
+ },
+ {
+  "label": "Ekor berumbai",
+  "description": "Ekor gelap & cukup panjang diangkat sebagai tanda waspada.",
+  "position": "0.000m 0.900m -0.720m",
+  "normal": "0.000m 0.000m -1.000m"
+ }
+]

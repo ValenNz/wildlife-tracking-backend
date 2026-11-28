@@ -1,0 +1,20 @@
+[
+ {
+  "label": "Balung (casque)",
+  "description": "Tonjolan jingga-merah melengkung ke atas seperti cula badak—asal nama 'rangkong badak'.",
+  "position": "0.000m 1.000m 0.480m",
+  "normal": "0.000m 1.000m 0.300m"
+ },
+ {
+  "label": "Paruh kuning besar",
+  "description": "Dipakai memetik buah ara; rangkong penting sebagai 'petani hutan' penyebar biji.",
+  "position": "0.040m 0.700m 0.500m",
+  "normal": "1.000m 0.000m 0.300m"
+ },
+ {
+  "label": "Ekor putih berpita hitam",
+  "description": "Ciri mudah dikenali saat terbang; kepakan sayapnya terdengar keras.",
+  "position": "0.080m 0.180m -0.400m",
+  "normal": "0.000m 0.000m -1.000m"
+ }
+]

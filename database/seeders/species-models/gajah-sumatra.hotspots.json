@@ -1,0 +1,20 @@
+[
+ {
+  "label": "Telinga kecil",
+  "description": "Telinga gajah Asia jauh lebih kecil dari gajah Afrika; tepinya melipat ke depan.",
+  "position": "0.550m 1.650m 0.800m",
+  "normal": "1.000m 0.000m 0.000m"
+ },
+ {
+  "label": "Belalai",
+  "description": "Lebih dari 40.000 otot; ujungnya punya satu 'jari' untuk memungut benda kecil.",
+  "position": "0.000m 0.600m 1.580m",
+  "normal": "0.000m 0.000m 1.000m"
+ },
+ {
+  "label": "Gading pendek",
+  "description": "Hanya sebagian jantan bergading; betina umumnya tidak, atau gadingnya sangat pendek (tush).",
+  "position": "0.220m 1.000m 1.620m",
+  "normal": "0.600m 0.000m 0.800m"
+ }
+]

@@ -1,0 +1,20 @@
+[
+ {
+  "label": "Kantong suara",
+  "description": "Kantong tenggorokan sebesar kepala mengembang saat 'bernyanyi'—suaranya terdengar hingga ±2 km.",
+  "position": "0.000m 0.860m 0.170m",
+  "normal": "0.000m 0.000m 1.000m"
+ },
+ {
+  "label": "Lengan berayun",
+  "description": "Bergerak dengan brakiasi (berayun dari dahan ke dahan); hampir tidak pernah turun ke tanah.",
+  "position": "0.300m 1.180m 0.040m",
+  "normal": "1.000m 0.000m 0.000m"
+ },
+ {
+  "label": "Owa terbesar",
+  "description": "Siamang adalah owa terbesar; bulunya hitam legam pada jantan maupun betina.",
+  "position": "0.000m 0.680m 0.130m",
+  "normal": "0.000m 0.000m 1.000m"
+ }
+]

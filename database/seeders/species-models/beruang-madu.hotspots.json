@@ -1,0 +1,20 @@
+[
+ {
+  "label": "Bercak dada",
+  "description": "Bercak kuning-jingga berbentuk U atau bulan sabit; polanya unik tiap individu.",
+  "position": "0.000m 0.740m 0.500m",
+  "normal": "0.000m 0.000m 1.000m"
+ },
+ {
+  "label": "Cakar panjang",
+  "description": "Untuk memanjat dan membongkar sarang lebah/rayap; lidahnya bisa 20–25 cm untuk menjilat madu.",
+  "position": "0.150m 0.050m 0.600m",
+  "normal": "0.500m 0.000m 0.800m"
+ },
+ {
+  "label": "Beruang terkecil",
+  "description": "Beruang terkecil di dunia: tinggi berdiri ±1,2–1,5 m, berat 25–65 kg.",
+  "position": "0.000m 0.820m 0.000m",
+  "normal": "0.000m 1.000m 0.000m"
+ }
+]

@@ -1,0 +1,20 @@
+[
+ {
+  "label": "Lengan panjang",
+  "description": "Rentang lengan dewasa bisa sekitar 2 m, hampir 1,5× tinggi badan—cocok untuk berayun di tajuk hutan.",
+  "position": "0.500m 0.455m 0.100m",
+  "normal": "1.000m 0.000m 0.000m"
+ },
+ {
+  "label": "Rambut jingga kemerahan",
+  "description": "Rambut Orangutan Sumatra lebih pucat dan panjang dibanding Orangutan Kalimantan.",
+  "position": "-0.250m 0.755m 0.150m",
+  "normal": "-0.500m 0.000m 0.800m"
+ },
+ {
+  "label": "Janggut & wajah",
+  "description": "Jantan dewasa punya janggut dan bantalan pipi (flensa) yang lebih datar dari kerabatnya di Kalimantan.",
+  "position": "0.000m 0.885m 0.220m",
+  "normal": "0.000m 0.000m 1.000m"
+ }
+]

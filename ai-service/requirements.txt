@@ -1,0 +1,14 @@
+tensorflow-cpu>=2.16
+tf-keras>=2.16
+torch>=2.2
+torchvision>=0.17
+speciesnet>=5.0.6
+reverse_geocoder>=1.5.1
+timm>=1.0
+opencv-python>=4.8
+pillow>=10
+numpy>=1.26
+fastapi>=0.110
+uvicorn[standard]>=0.29
+python-multipart>=0.0.9
+imageio-ffmpeg>=0.5

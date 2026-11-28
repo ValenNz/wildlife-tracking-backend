@@ -1,0 +1,20 @@
+[
+ {
+  "label": "Dua cula",
+  "description": "Satu-satunya badak Asia bercula dua; cula depan lebih panjang (±15–25 cm).",
+  "position": "0.000m 0.950m 1.500m",
+  "normal": "0.000m 0.000m 1.000m"
+ },
+ {
+  "label": "Berambut",
+  "description": "Badak paling berbulu—kerabat terdekat badak berbulu (woolly rhino) zaman es.",
+  "position": "0.420m 0.900m -0.100m",
+  "normal": "1.000m 0.000m 0.000m"
+ },
+ {
+  "label": "Badak terkecil",
+  "description": "Tinggi bahu ±1,0–1,5 m, berat ±500–1.000 kg.",
+  "position": "0.000m 1.200m 0.200m",
+  "normal": "0.000m 1.000m 0.000m"
+ }
+]

@@ -1,0 +1,20 @@
+[
+ {
+  "label": "Belang rapat",
+  "description": "Belang Harimau Sumatra paling rapat di antara subspesies harimau, sering bercabang dua.",
+  "position": "0.240m 0.700m -0.100m",
+  "normal": "1.000m 0.000m 0.000m"
+ },
+ {
+  "label": "Janggut & surai pipi",
+  "description": "Bulu di pipi & leher lebih panjang, terutama pada jantan.",
+  "position": "0.170m 0.760m 1.000m",
+  "normal": "0.800m 0.000m 0.500m"
+ },
+ {
+  "label": "Tubuh kecil",
+  "description": "Subspesies harimau terkecil yang masih hidup: jantan ±100–140 kg, panjang ±2,2–2,5 m.",
+  "position": "0.000m 0.880m 0.000m",
+  "normal": "0.000m 1.000m 0.000m"
+ }
+]
